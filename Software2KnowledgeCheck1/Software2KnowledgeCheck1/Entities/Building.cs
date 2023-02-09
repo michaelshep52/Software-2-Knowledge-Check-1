@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Software2KnowledgeCheck1
 {
-    internal class MaterialsRepo
+    public class Building
     {
-        public List<string> GetMaterials() => new List<string>();
+        public string? Street { get; set; }
+
+        public int StreetNumber { get; set; }
     }
 }

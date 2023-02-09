@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Software2KnowledgeCheck1
 {
-    internal class City
+    public class GenericRepository<T>
     {
-        public int ZipCode { get; set; }
-        public string Name { get; set; }
-        public string State { get; set; }
-        public int Population { get; set; }
+        private readonly List<T> _items = new();
 
-        public List<Building> Buildings { get; } = new List<Building>();
-
-        public void CreateApartment(Apartment apartment)
+        public void CreateHousing(T item)
         {
             // Get materials
             var materialRepo = new MaterialsRepo();
@@ -23,15 +13,15 @@ namespace Software2KnowledgeCheck1
 
             var permitRepo = new ZoningAndPermitRepo();
 
-            var buildingWasMade = ConstructBuilding<Apartment>(materialsNeeded, permitRepo.GetPermit(), permitRepo.ZoningApproves());
+            var housingWasMade = ConstructBuilding(materialsNeeded, permitRepo.GetPermit(), permitRepo.ZoningApproves());
 
-            if (buildingWasMade)
+            if (housingWasMade)
             {
-                Buildings.Add(apartment);
+                _items.Add(item);
             }
         }
 
-        public bool ConstructBuilding<T>(List<string> materials, bool permit, bool zoning) where T: Building
+        public bool ConstructBuilding(List<string> materials, bool permit, bool zoning)
         {
             if (permit && zoning)
             {
@@ -55,6 +45,6 @@ namespace Software2KnowledgeCheck1
                 return false;
             }
         }
-        
     }
 }
+
